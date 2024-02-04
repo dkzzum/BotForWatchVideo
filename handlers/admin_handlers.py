@@ -15,11 +15,14 @@ env.read_env()
 router.message.filter(lambda f: f.from_user.id in list(map(int, env.list('ADMIN_IDS'))))
 
 
-@router.message(StateFilter(default_state), Command('admin'))
+@router.message(StateFilter(FSMDefaultState.default_state), Command('admin'))
 async def start_admin_menu(message: Message, state: FSMContext):
-    await message.answer(ADMIN_MENU['start'],
-                         reply_markup=create_admin_kb())
+    mes: Message = (await state.get_data())['message_user']
 
+    await message.delete()
+
+    await state.update_data(first_message_admin=await mes.edit_text(ADMIN_MENU['start'],
+                                                                    reply_markup=create_admin_kb()))
     await state.set_state(FSMAdmins.admin_panel)
 
 
@@ -51,9 +54,11 @@ async def decision_making(callback: CallbackQuery, state: FSMContext):
         i += 1
 
     if len(deque_for_admins) <= i:
+        mes: Message = (await state.get_data())['first_message_admin']
+
         await callback.message.delete()
-        await callback.message.answer(ADMIN_MENU['end'],
-                                      reply_markup=create_admin_kb())
+        await mes.edit_text(ADMIN_MENU['end'],
+                            reply_markup=create_admin_kb())
     else:
         await state.update_data(index=i)
         deque_for_admins[i][1] = True
@@ -72,7 +77,10 @@ async def end_watch_video_admin(callback: CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data == 'exit_admin', ~StateFilter(default_state))
 async def exit_for_admin_menu(callback: CallbackQuery, state: FSMContext):
-    await callback.message.edit_text(LEXICON_RU['help'],
-                                     reply_markup=create_keyboard_main_menu())
+    if callback.message.text != LEXICON_RU['help']:
+        await callback.message.edit_text(LEXICON_RU['help'],
+                                         reply_markup=create_keyboard_main_menu())
+    else:
+        await callback.message.answer()
 
-    await state.clear()
+    await state.set_state(FSMDefaultState.default_state)

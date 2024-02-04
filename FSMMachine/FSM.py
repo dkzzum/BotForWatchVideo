@@ -10,3 +10,6 @@ class FSMAdmins(StatesGroup):
     admin_panel = State()
     watch_the_video = State()
 
+
+class FSMDefaultState(StatesGroup):
+    default_state = State()
