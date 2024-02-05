@@ -50,7 +50,7 @@ async def decision_making(callback: CallbackQuery, state: FSMContext):
     if callback.data == 'True':
         approved_video.append(deque_for_admins[index][0])
 
-        db[callback.message.from_user.id]['accepted_videos'] += 1
+        db[callback.from_user.id]['accepted_videos'] += 1
 
     deque_for_admins.remove(deque_for_admins[index])
 
