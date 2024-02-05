@@ -37,6 +37,7 @@ KB_WATCH_ADMIN = {
 DATA_USER = {
     'send_video': 0,
     'video_list': {},
+    'accepted_videos': 0,
 }
 
 LEXICON_COMMANDS_RU = {

@@ -45,9 +45,14 @@ async def watch_moder_video(callback: CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data.in_(['True', 'False']), StateFilter(FSMAdmins.watch_the_video))
 async def decision_making(callback: CallbackQuery, state: FSMContext):
+    index = (await state.get_data())['index']
+
     if callback.data == 'True':
-        index = (await state.get_data())['index']
         approved_video.append(deque_for_admins[index][0])
+
+        db[callback.message.from_user.id]['accepted_videos'] += 1
+
+    deque_for_admins.remove(deque_for_admins[index])
 
     i = 0
     while len(deque_for_admins) > i and deque_for_admins[i][1] is not False:
