@@ -89,3 +89,17 @@ async def exit_for_admin_menu(callback: CallbackQuery, state: FSMContext):
         await callback.message.answer()
 
     await state.set_state(FSMDefaultState.default_state)
+
+
+@router.message(Command(commands='help'), StateFilter(FSMAdmins.admin_panel))
+async def command_send_help(message: Message, state: FSMContext):
+    mes: Message = (await state.get_data())['message_user']
+
+    await message.delete()
+    await mes.edit_text(LEXICON_RU['help'],
+                        reply_markup=create_admin_kb())
+
+
+@router.message(StateFilter(FSMAdmins.admin_panel, FSMAdmins.watch_the_video))
+async def unknown_message(message: Message):
+    await message.delete()

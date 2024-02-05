@@ -47,15 +47,16 @@ async def callback_send_help(callback: CallbackQuery):
 
 
 @router.callback_query(F.data == 'profile', StateFilter(FSMDefaultState.default_state))
-async def callback_send_profile(callback: CallbackQuery, state: FSMContext):
+async def callback_send_profile(callback: CallbackQuery):
     data_user = (f'{callback.from_user.username}\n\n'
                  f'Отправлено видео: {db[callback.from_user.id]['send_video']}\n'
                  f'Прошедших модерацию: {db[callback.from_user.id]['accepted_videos']}')
 
-    await callback.message.delete()
-    await state.update_data(message_user=await callback.message.answer(
-        text=data_user,
-        reply_markup=create_keyboard_main_menu()))
+    if data_user == callback.message.text:
+        await callback.answer()
+    else:
+        await callback.message.edit_text(text=data_user,
+                                         reply_markup=create_keyboard_main_menu())
 
 
 @router.message(StateFilter(FSMDefaultState.default_state))
