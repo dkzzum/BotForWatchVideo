@@ -59,15 +59,6 @@ async def callback_send_profile(callback: CallbackQuery):
                                          reply_markup=create_keyboard_main_menu())
 
 
-@router.message(StateFilter(FSMDefaultState.default_state))
-async def unknown_message(message: Message, state: FSMContext):
-    mes: Message = (await state.get_data())['message_user']
-
-    await message.delete()
-    await mes.edit_text(LEXICON_RU['unknown_message'],
-                        reply_markup=create_keyboard_main_menu())
-
-
 @router.callback_query(F.data == 'send_video', StateFilter(FSMDefaultState.default_state))
 async def callback_send_vidio(callback: CallbackQuery, state: FSMContext):
     await callback.message.edit_text(LEXICON_RU['send_video'],
@@ -79,14 +70,14 @@ async def callback_send_vidio(callback: CallbackQuery, state: FSMContext):
 
 @router.message(F.content_type == ContentType.VIDEO, StateFilter(FSMSendVideo.send_video))
 async def message_send_video(message: Message, state: FSMContext):
-    if message.video.file_unique_id not in all_video:
+    if message.video.file_unique_id not in db[message.from_user.id]['unique_id_video']:
         await message.delete()
         mes: Message = (await state.get_data())['message']
         await mes.edit_text(LEXICON_RU['load_video'],
                             reply_markup=create_keyboard_main_menu())
 
         db[message.from_user.id]['video_list'][message.video.file_unique_id] = message.video.file_id
-        all_video.append(message.video.file_unique_id)
+        db[message.from_user.id]['unique_id_video'].append(message.video.file_unique_id)
         db[message.from_user.id]['send_video'] += 1
         deque_for_admins.append([message.video.file_id, False])
         await state.set_state(FSMDefaultState.default_state)
@@ -103,8 +94,9 @@ async def message_error_send_video(message: Message, state: FSMContext):
     mes: Message = (await state.get_data())['message']
 
     await message.delete()
-    await mes.edit_text(LEXICON_RU['error_send_video'],
-                        reply_markup=create_kb_state_send_video())
+    if mes.text != LEXICON_RU['error_send_video']:
+        await state.update_data(message=await mes.edit_text(LEXICON_RU['error_send_video'],
+                                                            reply_markup=create_kb_state_send_video()))
 
 
 @router.callback_query(F.data == 'cancellation', StateFilter(FSMSendVideo.send_video))

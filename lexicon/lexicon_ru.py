@@ -38,6 +38,7 @@ DATA_USER = {
     'send_video': 0,
     'video_list': {},
     'accepted_videos': 0,
+    'unique_id_video': []
 }
 
 LEXICON_COMMANDS_RU = {

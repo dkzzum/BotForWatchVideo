@@ -86,7 +86,7 @@ async def exit_for_admin_menu(callback: CallbackQuery, state: FSMContext):
         await callback.message.edit_text(LEXICON_RU['help'],
                                          reply_markup=create_keyboard_main_menu())
     else:
-        await callback.message.answer()
+        await callback.answer()
 
     await state.set_state(FSMDefaultState.default_state)
 
