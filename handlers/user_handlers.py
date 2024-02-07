@@ -1,12 +1,12 @@
-from aiogram import F, Router
+from keyboard.keyboard_user import create_keyboard_main_menu, create_kb_state_send_video
 from aiogram.filters import Command, CommandStart, StateFilter
-from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import default_state
 from aiogram.types import CallbackQuery, Message, ContentType
+from FSMMachine.FSMUser import FSMSendVideo, FSMDefaultState
 from lexicon.lexicon_ru import LEXICON_RU, DATA_USER
-from FSMMachine.FSM import FSMSendVideo, FSMDefaultState
+from aiogram.fsm.state import default_state
+from aiogram.fsm.context import FSMContext
+from aiogram import F, Router
 from db.db import *
-from keyboard.keyboard_main_menu import *
 
 
 router = Router()
@@ -20,7 +20,8 @@ def read_data_bd(user_id: int):
     db[user_id] = user
 
 
-@router.message(CommandStart(), StateFilter(default_state, FSMDefaultState.default_state))
+@router.message(CommandStart(), StateFilter(default_state, FSMDefaultState.default_state),
+                lambda mes: mes.from_user.id not in db.keys())
 async def command_send_start(message: Message, state: FSMContext):
     await state.set_state(FSMDefaultState.default_state)
     await state.update_data(message_user=await message.answer(LEXICON_RU['start'],

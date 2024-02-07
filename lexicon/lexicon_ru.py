@@ -11,34 +11,17 @@ LEXICON_RU = {
     'cancellation_send_video': 'Отправка видео отменена.',
     'send_repeated_video': 'Это видео у нас уже есть, отправьте другое.',
     'unknown_message': 'Я не понимаю что вы хотите!',
-}
-
-ADMIN_MENU = {
-    'start': 'Вы вошли в панель модерации!',
-    'end': 'Сейчас нет новых видео на модерации.',
-}
-
-KB_MENU = {
-    'Помощь': 'help',
-    'Профиль': 'profile',
-    'Отправить видео': 'send_video',
+    'not_enough_tights': 'У вас недостаточно прав!',
 }
 
 KB_STATE_SEND_VIDEO = {
     'Отменить отправку видео': 'cancellation'
 }
 
-KB_WATCH_ADMIN = {
-    'Отказать ❌': 'False',
-    'Принято ✅': 'True',
-    'Завершить сессию': 'end_session',
-}
-
-DATA_USER = {
-    'send_video': 0,
-    'video_list': {},
-    'accepted_videos': 0,
-    'unique_id_video': [],
+KB_MENU = {
+    'Помощь': 'help',
+    'Профиль': 'profile',
+    'Отправить видео': 'send_video',
 }
 
 LEXICON_COMMANDS_RU = {
@@ -48,26 +31,9 @@ LEXICON_COMMANDS_RU = {
     '/streamer': 'Режим стримера'
 }
 
-ADMIN_KB = {
-    'Новые видео': 'new_video',
-    'Выйти из меню администрации': 'exit_admin',
-}
-
-LEXICON_STREAMER_RU = {
-    'start_mode': 'Добор пожаловать в режим стримера, выберите интересующее вас действие!',
-    'answer': 'Выберите интересующее вас действие!',
-    'none_video': 'Увы, но сейчас нет видео!',
-    'last_video': 'Это последнее видео!',
-    'first_video': 'Это первое видео!',
-}
-
-STREAMER_MAIN_KB = {
-    'Смотреть видосы': 'watch_the_video',
-    'Выйти из режима стримера': 'end_session_streamer',
-}
-
-STREAMER_WATCH_VIDEO_KB = {
-    '<<': 'prew',
-    '>>': 'next',
-    'Завершить просмотр видео': 'finish_watching_video',
+DATA_USER = {
+    'send_video': 0,
+    'video_list': {},
+    'accepted_videos': 0,
+    'unique_id_video': [],
 }

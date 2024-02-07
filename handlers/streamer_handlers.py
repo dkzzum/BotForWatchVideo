@@ -1,11 +1,14 @@
+from keyboard.keyboard_streamer import create_main_kb_streamer, create_watch_video_streamer_kb
 from aiogram.types import CallbackQuery, Message, ContentType
-from lexicon.lexicon_ru import LEXICON_RU, DATA_USER
+from keyboard.keyboard_user import create_keyboard_main_menu
+from FSMMachine.FSMStreamer import FSMStreamerMode
 from aiogram.filters import Command, StateFilter
+from FSMMachine.FSMUser import FSMDefaultState
 from aiogram.fsm.state import default_state
 from aiogram.fsm.context import FSMContext
-from keyboard.keyboard_main_menu import *
+from lexicon.lexicon_ru import LEXICON_RU
+from lexicon.lexicon_streamer import *
 from aiogram import F, Router
-from FSMMachine.FSM import *
 from environs import Env
 from db.db import *
 

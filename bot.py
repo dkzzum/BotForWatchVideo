@@ -1,11 +1,10 @@
+from handlers import user_handlers, admin_handlers, other_handlers, streamer_handlers
+from aiogram.fsm.storage.memory import MemoryStorage
+from config_data.config import Config, load_config
+from keyboard.set_menu import set_main_menu
+from aiogram import Bot, Dispatcher
 import asyncio
 import logging
-
-from aiogram import Bot, Dispatcher
-from config_data.config import Config, load_config
-from handlers import user_handlers, admin_handlers, other_handlers, streemer_handlers
-from aiogram.fsm.storage.memory import MemoryStorage
-from keyboard.set_menu import set_main_menu
 
 
 logger = logging.getLogger(__name__)
@@ -32,7 +31,7 @@ async def main():
     dp = Dispatcher(storage=storage)
 
     # Регистрируем роутера в диспетчере
-    dp.include_router(streemer_handlers.router)
+    dp.include_router(streamer_handlers.router)
     dp.include_router(admin_handlers.router)
     dp.include_router(user_handlers.router)
     dp.include_router(other_handlers.router)

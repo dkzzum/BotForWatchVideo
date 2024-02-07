@@ -1,13 +1,17 @@
-from aiogram import F, Router
-from aiogram.filters import Command, StateFilter
-from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import default_state
+from keyboard.keyboard_admin import create_admin_kb, create_admin_watch_kb
 from aiogram.types import CallbackQuery, Message, ContentType
-from lexicon.lexicon_ru import LEXICON_RU, DATA_USER
-from FSMMachine.FSM import *
-from db.db import *
+from keyboard.keyboard_user import create_keyboard_main_menu
+from aiogram.filters import Command, StateFilter
+from FSMMachine.FSMUser import FSMDefaultState
+from aiogram.fsm.state import default_state
+from aiogram.fsm.context import FSMContext
+from FSMMachine.FSMAdmin import FSMAdmins
+from lexicon.lexicon_ru import LEXICON_RU
+from lexicon.lexicon_admin import *
+from aiogram import F, Router
 from environs import Env
-from keyboard.keyboard_main_menu import *
+from db.db import *
+
 
 router = Router()
 env = Env()
@@ -15,7 +19,7 @@ env.read_env()
 router.message.filter(lambda f: f.from_user.id in list(map(int, env.list('ADMIN_IDS'))))
 
 
-@router.message(StateFilter(FSMDefaultState.default_state), Command('admin'))
+@router.message(Command('admin'), StateFilter(FSMDefaultState.default_state))
 async def start_admin_menu(message: Message, state: FSMContext):
     mes: Message = (await state.get_data())['message_user']
 
