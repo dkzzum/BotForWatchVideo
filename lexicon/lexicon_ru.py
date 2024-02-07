@@ -10,7 +10,7 @@ LEXICON_RU = {
     'error_send_video': 'Отправьте только видео!',
     'cancellation_send_video': 'Отправка видео отменена.',
     'send_repeated_video': 'Это видео у нас уже есть, отправьте другое.',
-    'unknown_message': 'Я не понимаю что вы хотите!'
+    'unknown_message': 'Я не понимаю что вы хотите!',
 }
 
 ADMIN_MENU = {
@@ -38,16 +38,36 @@ DATA_USER = {
     'send_video': 0,
     'video_list': {},
     'accepted_videos': 0,
-    'unique_id_video': []
+    'unique_id_video': [],
 }
 
 LEXICON_COMMANDS_RU = {
     '/start': 'Запуск бота',
     '/help': 'Описание',
-    '/admin': 'Админ-панель'
+    '/admin': 'Админ-панель',
+    '/streamer': 'Режим стримера'
 }
 
 ADMIN_KB = {
     'Новые видео': 'new_video',
-    'Выйти из меню администрации': 'exit_admin'
+    'Выйти из меню администрации': 'exit_admin',
+}
+
+LEXICON_STREAMER_RU = {
+    'start_mode': 'Добор пожаловать в режим стримера, выберите интересующее вас действие!',
+    'answer': 'Выберите интересующее вас действие!',
+    'none_video': 'Увы, но сейчас нет видео!',
+    'last_video': 'Это последнее видео!',
+    'first_video': 'Это первое видео!',
+}
+
+STREAMER_MAIN_KB = {
+    'Смотреть видосы': 'watch_the_video',
+    'Выйти из режима стримера': 'end_session_streamer',
+}
+
+STREAMER_WATCH_VIDEO_KB = {
+    '<<': 'prew',
+    '>>': 'next',
+    'Завершить просмотр видео': 'finish_watching_video',
 }

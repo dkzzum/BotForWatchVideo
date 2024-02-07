@@ -13,3 +13,8 @@ class FSMAdmins(StatesGroup):
 
 class FSMDefaultState(StatesGroup):
     default_state = State()
+
+
+class FSMStreamerMode(StatesGroup):
+    streamer_panel = State()
+    watch_the_video = State()

@@ -20,7 +20,6 @@ async def start_admin_menu(message: Message, state: FSMContext):
     mes: Message = (await state.get_data())['message_user']
 
     await message.delete()
-
     await state.update_data(first_message_admin=await mes.edit_text(ADMIN_MENU['start'],
                                                                     reply_markup=create_admin_kb()))
     await state.set_state(FSMAdmins.admin_panel)
@@ -98,8 +97,3 @@ async def command_send_help(message: Message, state: FSMContext):
     await message.delete()
     await mes.edit_text(LEXICON_RU['help'],
                         reply_markup=create_admin_kb())
-
-
-@router.message(StateFilter(FSMAdmins.admin_panel, FSMAdmins.watch_the_video))
-async def unknown_message(message: Message):
-    await message.delete()
